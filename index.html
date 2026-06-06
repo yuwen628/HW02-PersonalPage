@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 人工智慧與程式開發作品集 - 科技藝術特展</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans TC & Fira Code & Playfair Display (Artistic feeling) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #ffffff;
+        }
+        .font-serif-art {
+            font-family: 'Playfair Display', 'Noto Sans TC', serif;
+        }
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+        /* 科技感微網格與點狀背景 */
+        .tech-grid-bg {
+            background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
+            background-size: 30px 30px;
+        }
+        /* 極簡精緻的卡片懸停發光與浮起 */
+        .glow-hover {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glow-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(99, 102, 241, 0.12);
+        }
+        /* 微小動畫 */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.9; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.5; transform: scale(0.96) rotate(180deg); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 12s infinite ease-in-out;
+        }
+        @keyframes drift {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(3deg); }
+        }
+        .animate-drift {
+            animation: drift 6s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-zinc-800 antialiased bg-white selection:bg-indigo-100 selection:text-indigo-900">
+
+    <!-- 導覽列 (只保留 首頁、九宮格、關於我) -->
+    <header class="sticky top-0 z-40 w-full border-b border-zinc-100 bg-white/80 backdrop-blur-md transition-all duration-300">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
+            <!-- Logo / Title -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="relative flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-900 text-white transition-transform group-hover:scale-105">
+                    <svg class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div class="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-r from-indigo-500 to-pink-500 opacity-0 blur transition duration-300 group-hover:opacity-40"></div>
+                </div>
+                <span class="text-lg font-bold tracking-tight text-zinc-900 transition-colors group-hover:text-indigo-600">AI 應用班作品集</span>
+            </a>
+
+            <!-- 桌面版導覽連結 -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-600">
+                <a href="#home" class="transition-colors hover:text-zinc-950">首頁</a>
+                <a href="#portfolio" class="transition-colors hover:text-zinc-950">科技藝術九宮格</a>
+                <a href="#about" class="transition-colors hover:text-zinc-950">關於我</a>
+            </nav>
+
+            <!-- 行動裝置選單按鈕 -->
+            <button id="menu-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 rounded-lg hover:bg-zinc-50 focus:outline-none" aria-label="Toggle Menu">
+                <span class="w-5 h-0.5 bg-zinc-800 transition-all duration-300" id="line1"></span>
+                <span class="w-5 h-0.5 bg-zinc-800 my-1 transition-all duration-300" id="line2"></span>
+                <span class="w-5 h-0.5 bg-zinc-800 transition-all duration-300" id="line3"></span>
+            </button>
+        </div>
+
+        <!-- 行動裝置側邊選單 -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-zinc-100 px-6 py-6 flex flex-col gap-4 shadow-xl transition-all">
+            <a href="#home" class="mobile-link text-lg font-medium py-2 text-zinc-800 hover:text-indigo-600">首頁</a>
+            <a href="#portfolio" class="mobile-link text-lg font-medium py-2 text-zinc-800 hover:text-indigo-600">科技藝術九宮格</a>
+            <a href="#about" class="mobile-link text-lg font-medium py-2 text-zinc-800 hover:text-indigo-600">關於我</a>
+        </div>
+    </header>
+
+    <!-- 首頁 Hero Section (白底簡約、點狀科技背景) -->
+    <section id="home" class="relative overflow-hidden pt-20 pb-24 md:pt-32 md:pb-36 tech-grid-bg">
+        <div class="relative mx-auto max-w-7xl px-6 md:px-8 text-center">
+            <!-- 小膠囊標籤 -->
+            <div class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/50 px-3.5 py-1.5 text-xs font-semibold text-indigo-700 mb-8">
+                <span class="flex h-1.5 w-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
+                AI人工智慧與大數據跨域應用班
+            </div>
+            
+            <!-- 主標題 (強化科技藝術感) -->
+            <h1 class="mx-auto max-w-4xl text-4xl font-bold tracking-tight text-zinc-900 sm:text-6xl md:text-7xl !leading-tight">
+                AI人工智慧應用班 <br class="hidden sm:inline">
+                <span class="bg-gradient-to-r from-zinc-900 via-indigo-950 to-pink-900 bg-clip-text text-transparent font-serif-art italic">演算法與數位藝術展</span>
+            </h1>
+            
+            <!-- 副標題 -->
+            <p class="mx-auto mt-8 max-w-2xl text-lg md:text-xl text-zinc-500 leading-relaxed font-light">
+                將嚴謹的程式碼與深度學習模型轉化為充滿生命力的視覺語言。這是一個探索科技邊界與數位美學、以代碼作畫的專業工程師展示空間。
+            </p>
+
+            <!-- 按鈕組 -->
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <a href="#portfolio" class="rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-zinc-200 hover:bg-zinc-800 hover:shadow-xl transition-all">
+                    進入科技藝術九宮格
+                </a>
+                <a href="#about" class="rounded-full border border-zinc-200 bg-white px-8 py-3.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300 transition-all">
+                    關於本作品集
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+    </section>
+
+    <!-- 9宮格作品展示區 (科技、藝術感九宮格) -->
+    <section id="portfolio" class="bg-zinc-50/30 py-24 border-t border-b border-zinc-100">
+        <div class="mx-auto max-w-7xl px-6 md:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-indigo-600 uppercase">ALGORITHMIC AESTHETICS & COMPUTATIONAL ART</h2>
+                <p class="mt-3 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl font-serif-art italic">
+                    科技與數位藝術九宮格
+                </p>
+                <div class="h-0.5 w-12 bg-indigo-600 mx-auto mt-5 rounded"></div>
+                <p class="mt-4 text-zinc-500 text-sm">
+                    點擊任何一個科技藝術模組，即可開啟專案背後的生成演算法、美學概念與核心創意代碼。
+                </p>
+            </div>
+
+            <!-- 九宮格 Grid 容器 -->
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                
+                <!-- 卡片 1: 混沌吸引子與生成藝術 -->
+                <div onclick="openModal(1)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-indigo-600 uppercase bg-indigo-50 px-2.5 py-1 rounded-md">Generative Art</span>
+                            <span class="text-zinc-400 font-mono text-xs">#01</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-indigo-600 transition-colors">奇異吸引子：混沌軌跡生成器</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">利用經典 Clifford 混沌吸引子演算法，通過微擾迭代百萬次點雲，將數學方程演繹為如星雲般細膩、具備無限自相似性的科技數字畫作。</p>
+                    </div>
+                    <!-- 科技藝術插圖 1: 混沌曲線與流體漸層 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full animate-drift" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#6366f1" />
+                                    <stop offset="50%" stop-color="#a855f7" />
+                                    <stop offset="100%" stop-color="#ec4899" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M10,50 Q40,15 80,45 T150,30 T190,65" fill="none" stroke="url(#grad1)" stroke-width="2.5" opacity="0.85" />
+                            <path d="M10,52 Q42,18 82,42 T152,32 T192,62" fill="none" stroke="url(#grad1)" stroke-width="1" opacity="0.4" />
+                            <circle cx="80" cy="45" r="3" fill="#ffffff" />
+                            <circle cx="150" cy="30" r="2" fill="#ec4899" />
+                            <circle cx="120" cy="60" r="1" fill="#a855f7" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 2: 神經風格轉譯 -->
+                <div onclick="openModal(2)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-emerald-600 uppercase bg-emerald-50 px-2.5 py-1 rounded-md">Neural Synthesis</span>
+                            <span class="text-zinc-400 font-mono text-xs">#02</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-emerald-600 transition-colors">AI神經風格特徵融合雕塑</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">基於 VGG-19 卷積網絡，抽離古典印象派之色彩特徵與現代極簡科技幾何結構，在隱空間中融合成具有數字賽博感的非線性視覺張力作品。</p>
+                    </div>
+                    <!-- 科技藝術插圖 2: 重疊幾何發光與網格 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="grad2" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.8"/>
+                                    <stop offset="100%" stop-color="#064e3b" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="100" cy="50" r="40" fill="url(#grad2)" />
+                            <polygon points="100,20 135,75 65,75" fill="none" stroke="#10b981" stroke-width="1.5" />
+                            <polygon points="100,80 135,25 65,25" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.6" />
+                            <circle cx="100" cy="50" r="15" fill="none" stroke="#ffffff" stroke-width="1" stroke-dasharray="4,4" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 3: 自然分形演算法 -->
+                <div onclick="openModal(3)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-cyan-600 uppercase bg-cyan-50 px-2.5 py-1 rounded-md">Fractal Growth</span>
+                            <span class="text-zinc-400 font-mono text-xs">#03</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-cyan-600 transition-colors">黃金比例與生長分形螺旋</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">實作黃金比例費波那契點陣，透過複數迭代生成 Mandelbrot 分形邊界，構築出充滿數學對稱美與無限生長感的動態矩陣藝術。</p>
+                    </div>
+                    <!-- 科技藝術插圖 3: 費波那契螺旋線 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full animate-pulse-slow" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#06b6d4" />
+                                    <stop offset="100%" stop-color="#3b82f6" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Mathematical Spirals -->
+                            <path d="M100,50 A5,5 0 0,1 105,50 A10,10 0 0,1 95,50 A20,20 0 0,1 115,50 A35,35 0 0,1 80,50 A55,55 0 0,1 135,50" fill="none" stroke="url(#grad3)" stroke-width="1.5" opacity="0.9" />
+                            <line x1="100" y1="10" x2="100" y2="90" stroke="#0891b2" stroke-width="0.5" opacity="0.3" />
+                            <line x1="60" y1="50" x2="140" y2="50" stroke="#0891b2" stroke-width="0.5" opacity="0.3" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 4: 粒子動力學流體 -->
+                <div onclick="openModal(4)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-violet-600 uppercase bg-violet-50 px-2.5 py-1 rounded-md">Fluid Particles</span>
+                            <span class="text-zinc-400 font-mono text-xs">#04</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-violet-600 transition-colors">量子流體：非線性粒子軌跡</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">基於 Navier-Stokes 流體力學偏微分方程，在二維空間動態更新十萬顆光子粒子速度場，形塑具有科技動態美感的氣流殘影畫卷。</p>
+                    </div>
+                    <!-- 科技藝術插圖 4: 粒子網格散點 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.1" />
+                                    <stop offset="50%" stop-color="#d946ef" stop-opacity="0.9" />
+                                    <stop offset="100%" stop-color="#6366f1" stop-opacity="0.1" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="100" cy="50" rx="80" ry="25" fill="none" stroke="url(#grad4)" stroke-width="1.5" />
+                            <ellipse cx="100" cy="50" rx="60" ry="15" fill="none" stroke="#d946ef" stroke-width="1" opacity="0.5" />
+                            <!-- Floating stars -->
+                            <circle cx="50" cy="40" r="1.5" fill="#c084fc" />
+                            <circle cx="120" cy="65" r="2" fill="#ffffff" />
+                            <circle cx="150" cy="35" r="1" fill="#818cf8" />
+                            <circle cx="80" cy="55" r="1.5" fill="#f472b6" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 5: 三維地形景觀數據雕塑 -->
+                <div onclick="openModal(5)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-amber-600 uppercase bg-amber-50 px-2.5 py-1 rounded-md">Data Sculpture</span>
+                            <span class="text-zinc-400 font-mono text-xs">#05</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-amber-600 transition-colors">數據山脊：三維頻譜浮雕</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">將天文觀測數據與聲學訊號進行傅立葉變換，動態映射至高度網格矩陣上，重塑出如巍峨山峰、具備時間軸流動感的虛擬三維晶格浮雕。</p>
+                    </div>
+                    <!-- 科技藝術插圖 5: 3D 山脊網格線 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,80 Q40,40 60,70 T100,30 T140,75 T180,80" fill="none" stroke="#f59e0b" stroke-width="2" />
+                            <path d="M20,85 Q40,50 60,75 T100,40 T140,80 T180,85" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.5" />
+                            <path d="M20,90 Q40,60 60,80 T100,50 T140,85 T180,90" fill="none" stroke="#d97706" stroke-width="1" opacity="0.2" />
+                            <line x1="60" y1="10" x2="60" y2="90" stroke="#f59e0b" stroke-width="0.5" stroke-dasharray="2,4" opacity="0.3" />
+                            <line x1="100" y1="10" x2="100" y2="90" stroke="#f59e0b" stroke-width="0.5" stroke-dasharray="2,4" opacity="0.3" />
+                            <line x1="140" y1="10" x2="140" y2="90" stroke="#f59e0b" stroke-width="0.5" stroke-dasharray="2,4" opacity="0.3" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 6: 動態圖網絡生成 -->
+                <div onclick="openModal(6)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-sky-600 uppercase bg-sky-50 px-2.5 py-1 rounded-md">Neural Graph</span>
+                            <span class="text-zinc-400 font-mono text-xs">#06</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-sky-600 transition-colors">神經網絡拓撲曼陀羅</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">藉由力導向圖（Force-Directed）演算法，模擬腦部神經元元連結在受外部刺激時的電位反應，並以此排列出對稱、和諧的數位曼陀羅星座網。</p>
+                    </div>
+                    <!-- 科技藝術插圖 6: 幾何節點與編織連結 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full animate-pulse-slow" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="100" cy="50" r="30" fill="none" stroke="#0ea5e9" stroke-width="1.5" />
+                            <polygon points="100,10 140,50 100,90 60,50" fill="none" stroke="#38bdf8" stroke-width="1" />
+                            <circle cx="100" cy="10" r="3.5" fill="#38bdf8" />
+                            <circle cx="140" cy="50" r="3.5" fill="#38bdf8" />
+                            <circle cx="100" cy="90" r="3.5" fill="#38bdf8" />
+                            <circle cx="60" cy="50" r="3.5" fill="#38bdf8" />
+                            <line x1="60" y1="50" x2="140" y2="50" stroke="#0ea5e9" stroke-width="0.5" opacity="0.4" />
+                            <line x1="100" y1="10" x2="100" y2="90" stroke="#0ea5e9" stroke-width="0.5" opacity="0.4" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 7: 賽博光影建構 -->
+                <div onclick="openModal(7)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-pink-600 uppercase bg-pink-50 px-2.5 py-1 rounded-md">Generative Architecture</span>
+                            <span class="text-zinc-400 font-mono text-xs">#07</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-pink-600 transition-colors">虛擬鏡界：高維度投影空間</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">將高維超立方體（Tesseract）在二維純白畫布上作正交、透視投影，並配合時間維度慢速旋轉，開闢出令人屏息的立體幾何建築科幻藝術。</p>
+                    </div>
+                    <!-- 科技藝術插圖 7: 3D立方體投影 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Inner Box -->
+                            <rect x="85" y="35" width="30" height="30" fill="none" stroke="#f472b6" stroke-width="1" />
+                            <!-- Outer Box -->
+                            <rect x="65" y="15" width="70" height="70" fill="none" stroke="#ec4899" stroke-width="1.5" opacity="0.7" />
+                            <!-- Connection Lines -->
+                            <line x1="65" y1="15" x2="85" y2="35" stroke="#f472b6" stroke-width="1" stroke-dasharray="2,2" />
+                            <line x1="135" y1="15" x2="115" y2="35" stroke="#f472b6" stroke-width="1" stroke-dasharray="2,2" />
+                            <line x1="65" y1="85" x2="85" y2="65" stroke="#f472b6" stroke-width="1" stroke-dasharray="2,2" />
+                            <line x1="135" y1="85" x2="115" y2="65" stroke="#f472b6" stroke-width="1" stroke-dasharray="2,2" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 8: 故障藝術與資訊熵 -->
+                <div onclick="openModal(8)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-teal-600 uppercase bg-teal-50 px-2.5 py-1 rounded-md">Glitch & Entropy</span>
+                            <span class="text-zinc-400 font-mono text-xs">#08</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-teal-600 transition-colors">資訊熵溢：訊號故障偏移重組</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">研究編碼傳輸的丟包與損壞，故意引入訊號干擾、色差偏移與行列位移，將數位媒介的「錯誤與脆弱性」轉譯為經典後現代故障視覺美學。</p>
+                    </div>
+                    <!-- 科技藝術插圖 8: 色差與斷裂條紋 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <g fill="#14b8a6">
+                                <rect x="20" y="25" width="160" height="4" opacity="0.8" />
+                                <rect x="40" y="35" width="110" height="6" opacity="0.3" />
+                                <rect x="20" y="45" width="140" height="5" />
+                                <rect x="80" y="55" width="100" height="3" opacity="0.9" />
+                                <rect x="50" y="65" width="70" height="7" opacity="0.6" />
+                            </g>
+                            <!-- Glitch highlight -->
+                            <rect x="145" y="45" width="15" height="5" fill="#f43f5e" />
+                            <rect x="30" y="35" width="10" height="6" fill="#3b82f6" />
+                        </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 9: 全息光譜調變 -->
+                <div onclick="openModal(9)" class="group cursor-pointer rounded-2xl border border-zinc-100 bg-white p-6 glow-hover flex flex-col justify-between h-[385px]">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono font-bold tracking-widest text-rose-600 uppercase bg-rose-50 px-2.5 py-1 rounded-md">Holographic Spectrum</span>
+                            <span class="text-zinc-400 font-mono text-xs">#09</span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-zinc-950 group-hover:text-rose-600 transition-colors">光波衍射：全息光譜透鏡</h3>
+                        <p class="mt-2 text-sm text-zinc-500 line-clamp-3">依據光波干涉定理，計算數位全息透鏡的振幅與相位分布，在二維空間渲染出如同彩虹極光般隨著光波波長動態調製的衍射條紋。</p>
+                    </div>
+                    <!-- 科技藝術插圖 9: 彩虹漸層與圓形偏振波 -->
+                    <div class="mt-5 h-32 w-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden relative">
+                        <svg class="w-full h-full animate-drift" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f43f5e" />
+                                    <stop offset="20%" stop-color="#ec4899" />
+                                    <stop offset="40%" stop-color="#a855f7" />
+                                    <stop offset="60%" stop-color="#6366f1" />
+                                    <stop offset="80%" stop-color="#06b6d4" />
+                                    <stop offset="100%" stop-color="#10b981" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="100" cy="50" r="45" fill="none" stroke="url(#rainbow)" stroke-width="4" opacity="0.85" />
+                            <circle cx="100" cy="50" r="35" fill="none" stroke="url(#rainbow)" stroke-width="2.5" opacity="0.6" />
+                            <circle cx="100" cy="50" r="25" fill="none" stroke="url(#rainbow)" stroke-width="1.5" opacity="0.4" />
+                            <circle cx="100" cy="50" r="15" fill="none" stroke="url(#rainbow)" stroke-width="0.5" opacity="0.2" />
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 關於我 Section (白底極簡) -->
+    <section id="about" class="py-24 bg-white">
+        <div class="mx-auto max-w-7xl px-6 md:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- 左側精美視覺（白底極簡風，描述學員定位） -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-[360px] aspect-square rounded-2xl bg-gradient-to-br from-zinc-50 to-zinc-100 border border-zinc-200 p-8 flex flex-col justify-between shadow-sm overflow-hidden">
+                        <div class="absolute top-0 right-0 transform translate-x-12 -translate-y-12 w-48 h-48 rounded-full bg-indigo-50/40 -z-10"></div>
+                        
+                        <div class="flex items-center gap-4">
+                            <div class="h-12 w-12 rounded-full bg-zinc-950 text-white flex items-center justify-center font-bold text-base font-mono">&lt;/&gt;</div>
+                            <div>
+                                <h4 class="font-bold text-zinc-900">學生的作品空間</h4>
+                                <p class="text-xs text-zinc-400">科技與藝術探索</p>
+                            </div>
+                        </div>
+
+                        <div class="my-6">
+                            <blockquote class="text-zinc-600 italic text-sm leading-relaxed font-serif-art">
+                                "這是一個學生的作品集，記錄了我們在 AI 人工智慧與程式開發應用班，將冰冷邏輯與感性視覺交互編織的冒險。我們以程式碼為墨，數學公式為筆，重構數位空間的無限可能。"
+                            </blockquote>
+                        </div>
+
+                        <div class="flex items-center justify-between border-t border-zinc-100 pt-4 text-xs text-zinc-500">
+                            <span>學員代號：AI-Artist-2026</span>
+                            <span class="font-medium text-indigo-600 font-mono">Build 2.0.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側自述內容 -->
+                <div class="lg:col-span-7">
+                    <h2 class="text-xs font-bold tracking-widest text-indigo-600 uppercase">ABOUT THE CREATOR</h2>
+                    <h3 class="mt-3 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl font-serif-art italic">演算法邏輯與數位美學的跨界行旅</h3>
+                    <p class="mt-6 text-base text-zinc-500 leading-relaxed">
+                        你好！我是一名正致力於 <b>AI 機器學習、創意編程（Creative Coding）與演算法藝術</b> 的跨域開發工程師。這份九宮格作品集，是我在「AI人工智慧應用班」系統化實戰演訓下的精華結晶。
+                    </p>
+                    <p class="mt-4 text-base text-zinc-500 leading-relaxed">
+                        與傳統純程式開發不同，這裡展示的每一個科技藝術模組，皆是以「數學演算法為核心，視覺美感為載體」設計而成。不論是基於物理方程式模擬的粒子流體、大數據轉換的浮雕雕塑，亦或是神經網絡提取色彩而融會的隱空間畫作，我們追求將複雜程式轉換為優雅易讀的乾淨結構，並展現震撼人心的視覺效果。
+                    </p>
+
+                    <!-- 三大特色承諾 -->
+                    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="border-l-2 border-zinc-900 pl-4">
+                            <h4 class="font-semibold text-zinc-900 text-sm">數理美學</h4>
+                            <p class="mt-1.5 text-xs text-zinc-400 leading-relaxed">以混沌吸引子與分形幾何揭示自然的數學對稱之美。</p>
+                        </div>
+                        <div class="border-l-2 border-zinc-900 pl-4">
+                            <h4 class="font-semibold text-zinc-900 text-sm">生成式 AI</h4>
+                            <p class="mt-1.5 text-xs text-zinc-400 leading-relaxed">利用深度卷積特徵抽取與流體引擎渲染前衛科技視覺。</p>
+                        </div>
+                        <div class="border-l-2 border-zinc-900 pl-4">
+                            <h4 class="font-semibold text-zinc-900 text-sm">乾淨代碼</h4>
+                            <p class="mt-1.5 text-xs text-zinc-400 leading-relaxed">追求卓越的渲染速度、記憶體防禦與模組化代碼重構。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 (白底極簡) -->
+    <footer class="border-t border-zinc-100 bg-zinc-50 py-12 text-center text-xs text-zinc-400">
+        <div class="mx-auto max-w-7xl px-6 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 AI與程式開發應用班作品集. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" onclick="triggerToast('正在導入藝術原始碼連結...')" class="hover:text-zinc-600 transition-colors">GitHub</a>
+                <a href="#" onclick="triggerToast('創意代碼架構文件準備中！')" class="hover:text-zinc-600 transition-colors">Documentation</a>
+                <a href="#home" class="hover:text-zinc-600 transition-colors">回到首頁</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- 9宮格作品詳情彈窗 (Modal System) -->
+    <div id="projectModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- 點擊背景關閉 -->
+        <div class="absolute inset-0" onclick="closeModal()"></div>
+        
+        <!-- 彈窗本體 -->
+        <div class="relative w-full max-w-2xl bg-white rounded-2xl border border-zinc-100 shadow-2xl p-6 md:p-8 transform scale-95 transition-transform duration-300 overflow-y-auto max-h-[90vh]" id="modalContent">
+            
+            <!-- 關閉按鈕 -->
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-zinc-400 hover:text-zinc-600 focus:outline-none" aria-label="Close modal">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- 彈窗內容動態插入 -->
+            <div id="modalBody">
+                <!-- 動態生成的內容將放在這裡 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 自訂無 Alert 式通知 (Toast Container) -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 flex transform items-center gap-3 rounded-xl bg-zinc-900 px-5 py-4 text-white shadow-2xl transition-all duration-300 translate-y-10 opacity-0 pointer-events-none">
+        <svg class="h-5 w-5 text-indigo-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="text-xs font-semibold" id="toastMsg">成功訊息!</span>
+    </div>
+
+    <!-- JavaScript 邏輯與互動行為 -->
+    <script>
+        // 行動裝置選單控制
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                line1.classList.add('rotate-45', 'translate-y-1.5');
+                line2.classList.add('opacity-0');
+                line3.classList.add('-rotate-45', '-translate-y-1.5');
+            } else {
+                mobileMenu.classList.add('hidden');
+                line1.classList.remove('rotate-45', 'translate-y-1.5');
+                line2.classList.remove('opacity-0');
+                line3.classList.remove('-rotate-45', '-translate-y-1.5');
+            }
+        });
+
+        // 點擊行動版連結自動收合
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                line1.classList.remove('rotate-45', 'translate-y-1.5');
+                line2.classList.remove('opacity-0');
+                line3.classList.remove('-rotate-45', '-translate-y-1.5');
+            });
+        });
+
+        // 9宮格科技藝術作品詳細數據庫 (結合數學美學與代碼設計)
+        const projectData = {
+            1: {
+                title: "奇異吸引子：混沌軌跡生成器",
+                category: "Generative Art",
+                badgeClass: "text-indigo-600 bg-indigo-50",
+                desc: "藉由微調 Clifford、Peter de Jong 或 Lorenz 吸引子的非線性遞迴方程，本專案將複雜的混沌運動數值轉化為精細的點雲投影。透過對數尺度映射色彩，產生宛如宇宙星雲般，細節無限延伸之視覺畫作。",
+                tech: ["Python", "NumPy", "Matplotlib", "JS Canvas", "GLSL Shaders"],
+                metric: "支援單一畫布 10,000,000 個粒子軌跡的高速點雲渲染，影格率穩定達 60 FPS。",
+                codeSnippet: `// JS 吸引子局部迭代公式\nfunction updateAttractor(x, y, a, b, c, d) {\n  let nextX = Math.sin(a * y) + c * Math.cos(a * x);\n  let nextY = Math.sin(b * x) + d * Math.cos(b * y);\n  return [nextX, nextY];\n}`
+            },
+            2: {
+                title: "AI神經風格特徵融合雕塑",
+                category: "Neural Synthesis",
+                badgeClass: "text-emerald-600 bg-emerald-50",
+                desc: "採用神經風格轉移技術 (Neural Style Transfer)，提取名家油畫在淺層神經元所刻劃之紋理與色調，與當代幾何數位模型进行特徵圖融合，並利用自適應動態梯度算法控制結構強度，探索科技媒介的繪畫美學。",
+                tech: ["PyTorch", "VGG-19 Core", "Style Loss Optimization", "TensorFlow Lite"],
+                metric: "透過特徵級矩陣重組，風格融合精確度達 92.4%，將高解析圖像融合運算時程壓縮至 3 秒內。",
+                codeSnippet: `# Style Loss calculation using Gram Matrix\ndef gram_matrix(tensor):\n    a, b, c, d = tensor.size()\n    features = tensor.view(a * b, c * d)\n    G = torch.mm(features, features.t())\n    return G.div(a * b * c * d)`
+            },
+            3: {
+                title: "黃金比例與生長分形螺旋",
+                category: "Fractal Growth",
+                badgeClass: "text-cyan-600 bg-cyan-50",
+                desc: "利用 Julia 與 Mandelbrot 複數方程式的遞迴收斂邊界，本專案結合斐波那契螺旋（Fibonacci Spiral）算法，透過在極坐標系上的角度調變，在純白極簡空間內建構出極具自然生長感、又兼備嚴謹對稱美學的動力學分形。",
+                tech: ["p5.js", "WebGL", "HTML5 Canvas", "C++ OpenFrameworks"],
+                metric: "在有限渲染深度（Max Iterations: 500）下，維持完美自相似性的動態無極限無損縮放。",
+                codeSnippet: `// 複數分形迭代核心\nlet zx = x, zy = y;\nfor (let i = 0; i < maxIter; i++) {\n  let xtemp = zx * zx - zy * zy + cx;\n  zy = 2 * zx * zy + cy;\n  zx = xtemp;\n  if (zx * zx + zy * zy > 4.0) break;\n}`
+            },
+            4: {
+                title: "量子流體：非線性粒子軌跡",
+                category: "Fluid Particles",
+                badgeClass: "text-violet-600 bg-violet-50",
+                desc: "將向量場（Vector Field）引入粒子力學。本作品藉由 Perlin 噪聲與 Curl Noise 噪聲演算法，模擬具有黏滯度與摩擦係數的量子流體運作狀態。數萬顆發光粒子在動態力場引導下隨時間消散、聚合，形成詩意的數位線絲。",
+                tech: ["HTML5 Canvas API", "Perlin Noise 3D", "Vector Mathematics", "Three.js Particles"],
+                metric: "動態粒子總量 50k+，利用 GPU 頂點著色器計算軌跡偏移，CPU 佔用率降至極佳的 4% 以下。",
+                codeSnippet: `// 基於 Curl Noise 的粒子力場運動向量計算\nfunction getCurlNoiseVector(x, y, scale) {\n  let n1 = noise(x * scale, (y + epsilon) * scale);\n  let n2 = noise(x * scale, (y - epsilon) * scale);\n  let forceX = (n1 - n2) / (2.0 * epsilon);\n  return new Vector2(forceX, -forceY);\n}`
+            },
+            5: {
+                title: "數據山脊：三維頻譜浮雕",
+                category: "Data Sculpture",
+                badgeClass: "text-amber-600 bg-amber-50",
+                desc: "本作品利用聲波數據及高空光學頻譜進行即時傅立葉變換（FFT）。提取後的低音、中音、高頻頻率會被動態分配到三維網格的頂點 Y 軸。藉由平滑差值，最終在白底空間中建構出一座隨音樂律動的虛擬科技雕塑山脊。",
+                tech: ["Three.js", "Web Audio API", "Fast Fourier Transform", "SVG Path Gen"],
+                metric: "即時採樣率為 2048Hz，FFT 特徵映射至三維空間反應延遲僅有 5ms，展現極致流暢性。",
+                codeSnippet: `// 聲頻特徵映射三維網格頂點\nanalyser.getByteFrequencyData(dataArray);\nfor (let i = 0; i < gridLength; i++) {\n  let targetHeight = dataArray[i] * heightScale;\n  mesh.geometry.vertices[i].y = lerp(mesh.geometry.vertices[i].y, targetHeight, 0.15);\n}`
+            },
+            6: {
+                title: "神經網絡拓撲曼陀羅",
+                category: "Neural Graph",
+                badgeClass: "text-sky-600 bg-sky-50",
+                desc: "將機器學習中的神經網路連結與力學彈簧算法相結合。隨著層數與權重的動態刷新，各個特徵節點會自動進行斥力與引力的對抗排列。最終，這些密集的連結線條與發光節點，編織出了充滿數學秩序與神聖曼陀羅質感的網絡星圖。",
+                tech: ["D3.js Force Simulation", "SVG Coordinate Projection", "Node Weight Optimization"],
+                metric: "全自動自適應排版（Force-Directed Layout），動態調整斥力常數以實現完美的對稱平衡與防邊界重疊。",
+                codeSnippet: `// D3 力導向曼陀羅布局參數配置\nconst simulation = d3.forceSimulation(nodes)\n  .force("charge", d3.forceManyBody().strength(-120))\n  .force("link", d3.forceLink(links).distance(50))\n  .force("center", d3.forceCenter(width / 2, height / 2));`
+            },
+            7: {
+                title: "虛擬鏡界：高維度投影空間",
+                category: "Generative Architecture",
+                badgeClass: "text-pink-600 bg-pink-50",
+                desc: "探索三維與四維空間（Hypercube）的幾何張力。將四維旋轉矩陣運算後的所有座標點，投影至二維高畫質渲染空間，並對面與棱線施加漸層霓虹邊框，建構出隨重力感應或鼠標緩慢轉動的懸浮科技建築藝術。",
+                tech: ["Three.js Matrix4", "Orthographic Projection", "Isometric Geometry", "CSS 3D Transforms"],
+                metric: "完美進行四維歐拉角動態變換，頂點間幾何夾角計算精度達到小數點後第 12 位。",
+                codeSnippet: `// 四維旋轉矩陣變換投影\nfunction rotateTesseract(x, y, z, w, theta) {\n  let cosT = Math.cos(theta), sinT = Math.sin(theta);\n  // 在 XW 平面進行幾何旋轉\n  let nextX = x * cosT - w * sinT;\n  let nextW = x * sinT + w * cosT;\n  return [nextX, y, z, nextW];\n}`
+            },
+            8: {
+                title: "資訊熵溢：訊號故障偏移重組",
+                category: "Glitch & Entropy",
+                badgeClass: "text-teal-600 bg-teal-50",
+                desc: "通過控制數據緩衝區中的位移偏移（Bitwise Shift），本專案將圖片轉換為字節流並有目的地進行位元截斷與段落重排。隨後利用像素混合模式渲染，在白底畫面中製造出極具破壞美學的故障斑塊、色彩衍射與行列崩塌特效。",
+                tech: ["Raw Byte Manipulation", "Canvas Pixel Processing", "Chromatic Aberration Filter"],
+                metric: "動態噪點、行列位移頻率、色偏干擾度均可由混沌常數精細調節，保證高保真與藝術美學的平衡。",
+                codeSnippet: `// 圖像色差偏移(RGB Split)濾鏡核心\nfor (let i = 0; i < pixels.length; i += 4) {\n  pixels[i] = pixels[i + shiftRed];         // Red offset\n  pixels[i+1] = pixels[i + 1 + shiftGreen]; // Green offset\n  pixels[i+2] = pixels[i + 2];              // Blue stays\n}`
+            },
+            9: {
+                title: "光波衍射：全息光譜透鏡",
+                category: "Holographic Spectrum",
+                badgeClass: "text-rose-600 bg-rose-50",
+                desc: "模擬微小光波通過數字孔徑（Digital Aperture）時發生的干涉現象。藉由計算惠更斯-菲涅耳原理（Huygens-Fresnel Principle）中的複數相位變化，渲染出斑斕、炫目且具備透鏡偏振折射感的精密彩虹衍射光譜波紋。",
+                tech: ["GLSL Shader Fragment", "WebGL Context", "Complex Wave Mathematics"],
+                metric: "在全視網膜螢幕解析度下進行百萬像素級的動態正弦偏振計算，幀率穩定維持 60 FPS。",
+                codeSnippet: `// 全息彩虹衍射渲染 GLSL 片段著色器\nvoid main() {\n  vec2 uv = gl_FragCoord.xy / u_resolution;\n  float dist = distance(uv, vec2(0.5));\n  float wave = sin(dist * 50.0 - u_time * 5.0);\n  vec3 color = vec3(0.5 + 0.5 * cos(u_time + uv.xyx + vec3(0,2,4)));\n  gl_FragColor = vec4(color * wave, 1.0);\n}`
+            }
+        };
+
+        // 開啟 Modal 函數
+        function openModal(id) {
+            const data = projectData[id];
+            if (!data) return;
+
+            const modalBody = document.getElementById('modalBody');
+            
+            // 渲染技術標籤
+            const techBadges = data.tech.map(t => `<span class="px-2.5 py-1 text-[11px] font-mono font-semibold text-zinc-600 bg-zinc-100 rounded-md">${t}</span>`).join(' ');
+
+            modalBody.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <span class="text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-md ${data.badgeClass}">${data.category}</span>
+                        <h2 class="mt-4 text-2xl font-bold text-zinc-950 font-serif-art italic">${data.title}</h2>
+                        <div class="h-0.5 w-12 bg-zinc-900 mt-3"></div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2 font-mono">科技藝術核心概念</h4>
+                        <p class="text-zinc-600 text-sm leading-relaxed">${data.desc}</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2 font-mono">採用的核心技術棧 (Tech Stack)</h4>
+                            <div class="flex flex-wrap gap-2">${techBadges}</div>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2 font-mono">美學渲染與量化指標</h4>
+                            <p class="text-zinc-600 text-sm font-medium leading-relaxed">${data.metric}</p>
+                        </div>
+                    </div>
+
+                    <!-- 精美極簡代碼區 -->
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2 font-mono">生成藝術代碼預覽 (Creative Code)</h4>
+                        <div class="bg-zinc-900 rounded-xl p-4 overflow-x-auto border border-zinc-800 shadow-inner">
+                            <pre class="text-[11px] text-indigo-200/90 font-mono leading-relaxed"><code>${data.codeSnippet}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-zinc-100 flex justify-end gap-3">
+                        <button onclick="closeModal()" class="px-5 py-2 text-xs font-semibold border border-zinc-200 text-zinc-600 rounded-lg hover:bg-zinc-50 transition-all">關閉</button>
+                        <button onclick="triggerToast('創意代碼開源庫建置中，如需提前閱覽請向學員申請！')" class="px-5 py-2 text-xs font-semibold bg-zinc-900 text-white rounded-lg hover:bg-zinc-800 transition-all">索取藝術源碼</button>
+                    </div>
+                </div>
+            `;
+
+            // 顯示彈窗動畫
+            const modal = document.getElementById('projectModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+            document.body.style.overflow = 'hidden'; // 鎖定背景
+        }
+
+        // 關閉 Modal 函數
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            document.body.style.overflow = ''; // 還原滾動
+        }
+
+        // 自訂 Toast 通知控制
+        function triggerToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = message;
+            
+            // 動畫移入
+            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            // 3秒後自動消退
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
