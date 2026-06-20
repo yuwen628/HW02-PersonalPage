@@ -1,5 +1,5 @@
 
-Demo Website: https://yuwen628.github.io/WH2-PersonalWeb/
+Demo Website: https://yuwen628.github.io/HW02-PersonalPage/
 
 # AI 人工智慧與程式開發作品集 — 科技藝術特展 🎨
 
@@ -65,8 +65,8 @@ Demo Website: https://yuwen628.github.io/WH2-PersonalWeb/
 
 1. **下載專案**：
    ```bash
-   git clone https://github.com/yuwen628/WH2-PersonalWeb.git
-   cd L3B-WH2-PersonalWeb
+   git clone https://github.com/yuwen628/HW02-PersonalPage.git
+   cd HW02-PersonalPage
    ```
 
 2. **運行網站**：
@@ -82,7 +82,7 @@ Demo Website: https://yuwen628.github.io/WH2-PersonalWeb/
 ## 📄 專案結構
 
 ```
-L3B-WH2-PersonalWeb/
+HW02-PersonalPage/
 ├── index.html   # 網站主體（HTML + CSS + JavaScript 全部整合在單一檔案）
 └── README.md    # 本說明文件
 ```
